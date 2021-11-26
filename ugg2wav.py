@@ -1,6 +1,6 @@
 # Converting UGG files from Rode Wireless Go II transmitters (unsompressed recordings) to WAV format
-# Author: Jan Mazanec, https://github.com/fukidzon, jmazanec@gmail.com
-# 3.11.2021
+# Author: Jan Mazanec, https://github.com/fukidzon, jmazanec@gmail.com, 3.11.2021
+# 26.11.2021 - preserving modification time added (proposed by @tmuka)
 # needed libraries: wave (install as `pip install wave`)
 
 # usage: `python ugg2wav.py REC00032.UGG`
@@ -8,6 +8,7 @@
 
 import sys
 import wave
+import os
 
 # get filename and read the lines
 if not len(sys.argv) > 1:
@@ -15,6 +16,8 @@ if not len(sys.argv) > 1:
 filename = sys.argv[1] 
 try:
     with open(filename, 'rb') as f:
+        original_mtime = os.stat(filename).st_mtime
+        original_atime = os.stat(filename).st_atime
         s = f.read()
 except IOError as e:
     sys.exit("Couldn't open file {}.".format(e))
@@ -51,3 +54,6 @@ with wave.open(filename + ".wav", "w") as f:
     f.setframerate(48000)
     f.writeframes(data)
 
+# update new wav file datetime to match original file mtime
+# preserving original_atime doesn't make sense, file will have current time (windows)
+os.utime(filename + ".wav", (original_atime, original_mtime))
