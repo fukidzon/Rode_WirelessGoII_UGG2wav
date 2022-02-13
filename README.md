@@ -10,8 +10,9 @@ The possible solution is to contact Rode customer service and support, upload th
 I wanted to be able to do it by myself but there was no existing solution. So I looked into the UGG file and I spotted the 'OggS' - but unfortunately the format of the UGG file doesn't conform really the Ogg file specification (https://en.wikipedia.org/wiki/Ogg#Page_structure) but after some effort comparing the converted WAV file and the original UGG file and some trial and error I was able to extract the 24bit PCM data from the files and save it to WAV file
 
 ## USAGE
-Python is needed, and installing the wave library (`pip install wave`)
+Python is needed (good installation guide is at [Download, Setup & Install Python on Windows](https://medium.com/co-learning-lounge/how-to-download-install-python-on-windows-2021-44a707994013)) and installing the wave library (`pip install wave`)
 
-then convert the files with `python ugg2wav.py REC00032.UGG`
+Convert the files with `python ugg2wav.py REC00032.UGG` - file `REC00032.UGG.wav` is created
+or provide a directory `python ugg2wav.py c:/wirectory/with/recordings` and all `.UGG` files in that directory will be converted
 
 Enjoy! :)
